@@ -2,12 +2,10 @@ import java.util.*;
 
 public class Knapsack {
 
-    // 1) Greedy Fractional Knapsack Algorithm
-    public static int fractionalKnapsack(int W, List<int[]> items) {
+    public static int GreedyKnapsack(int W, List<int[]> items) {
         List<Pair<Double, int[]>> ratios = new ArrayList<>();
         int steps = 0;
-        
-        // Calculate ratios and store items
+
         for (int i = 0; i < items.size(); i++) {
             int weight = items.get(i)[0];
             int value = items.get(i)[1];
@@ -16,12 +14,10 @@ public class Knapsack {
             steps++;
         }
 
-        // Sort items by ratio (value/weight)
         ratios.sort((a, b) -> Double.compare(b.getKey(), a.getKey()));
 
         double totalValue = 0.0;
-        
-        // Greedy approach to take items
+
         for (Pair<Double, int[]> pair : ratios) {
             int weight = pair.getValue()[0];
             int value = pair.getValue()[1];
@@ -39,13 +35,11 @@ public class Knapsack {
         return steps;
     }
 
-    // 2) 0/1 Knapsack using Dynamic Programming
     public static int knapsack01(int W, List<int[]> items) {
         int n = items.size();
         int[][] dp = new int[n + 1][W + 1];
         int steps = 0;
 
-        // DP approach to 0/1 Knapsack
         for (int i = 1; i <= n; i++) {
             for (int w = 1; w <= W; w++) {
                 steps++;
@@ -67,7 +61,7 @@ public class Knapsack {
 
         for (int W : capacities) {
             System.out.println("=================== Capacity: " + W + " ===================");
-            System.out.println("Greedy Knapsack(Fractional): " + fractionalKnapsack(W, items) + " steps");
+            System.out.println("Greedy Knapsack(Fractional): " + GreedyKnapsack(W, items) + " steps");
             System.out.println("0/1 Knapsack(DP): " + knapsack01(W, items) + " steps");
             System.out.println("========================================================\n");
         }
@@ -76,8 +70,7 @@ public class Knapsack {
     public static void main(String[] args) {
         analyzeKnapsack();
     }
-    
-    // Pair class to store ratio and item data
+
     public static class Pair<K, V> {
         private K key;
         private V value;
